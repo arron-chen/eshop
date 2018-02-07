@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '@/components/index'
-import product from '@/views/product'
+
+import index from '@/views/index'
+import product from '@/components/product'
 import list from '@/views/list'
 import cart from '@/views/cart'
 
@@ -17,9 +18,8 @@ const router = new Router(Object.assign({}, RouterConfig,{
   routes: [
     {
       path: '/',
-      name: 'index',
       meta:{
-        title:'首页'
+        title:'eshop电子商城'
       },
       component: index,
       children: [
@@ -27,7 +27,7 @@ const router = new Router(Object.assign({}, RouterConfig,{
           path:'/',
           component:list,
           meta:{
-            title:'首页'
+            title:'eshop电子商城'
           },
         },
       ]

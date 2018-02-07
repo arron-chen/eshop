@@ -12,7 +12,7 @@
                 v-for="item in colors" @click="handleFilterColor(item)">{{item}}</span>
         </div>
         <div class="list-control-order">
-          <span>排序</span>
+          <span>排序：&nbsp;&nbsp;</span>
           <span class="list-control-order-item" :class="{on:order === ''}" @click="handleOrderDefault">默认</span>
           <span class="list-control-order-item" :class="{on:order === 'sales'}" @click="handleOrderSales">销量
             <template v-if="order === 'sales'">↓</template>
@@ -25,10 +25,11 @@
       </div>
       <Product v-for="item in filteredAndOrderedList" :info="item" :key="item.id"></Product>
       <div class="product-not-found" v-show="!filteredAndOrderedList.length">暂无相关商品</div>
+      <div class="clr"></div>
     </div>
 </template>
 <script>
-  import Product from '../components/product.vue';
+  import Product from './product.vue';
   export default {
     components:{ Product },
     data(){
@@ -82,7 +83,7 @@
       //筛选品牌
       handleFilterBrand(brand){
         //单次点击选中，再次点击取消选中
-        if(this.filterBrand === 'brand'){
+        if(this.filterBrand === brand){
           this.filterBrand ='';
         }else{
           this.filterBrand = brand;
@@ -90,7 +91,7 @@
       },
       //筛选颜色
       handleFilterColor(color){
-        if(this.filterColor === 'color'){
+        if(this.filterColor === color){
           this.filterColor ='';
         }else{
           this.filterColor = color;
@@ -117,6 +118,7 @@
   }
 </script>
 <style lang="less" scoped>
+  .clr{clear: both;}
   .list-control {
     background: #fff;
     border-radius:6px;
@@ -125,6 +127,7 @@
     box-shadow:0 1px 1px rgba(0,0,0,.2);
     .list-control-filter{
       margin-bottom:16px;
+      font-size:12px;
       .list-control-filter-item{
         cursor: pointer;
         display: inline-block;
@@ -132,6 +135,7 @@
         border-radius:4px;
         margin-right:6px;
         padding:2px 6px;
+        user-select: none;
       }
       .list-control-filter-item.on{
         background: #f2352e;
@@ -140,6 +144,7 @@
       }
     }
     .list-control-order{
+      font-size:12px;
        .list-control-order-item{
          cursor: pointer;
          display: inline-block;
@@ -147,6 +152,8 @@
          border-radius:4px;
          margin-right:6px;
          padding:2px 6px;
+         user-select: none;
+
        }
       .list-control-order-item.on{
         background: #f2352e;

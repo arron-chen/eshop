@@ -31,7 +31,7 @@
       </div>
       <div class="cart-promotion" v-show="cartList.length">
         <span>使用优惠码</span>
-        <input type="text" v-model="promotionCode"/>
+        <input type="text" v-model="promotionCode" placeholder="请输入您的优惠码"/>
         <span class="cart-control-promotion" @click="handleCheckCode">验证</span>
       </div>
       <div class="cart-footer" v-show="cartList.length">
@@ -42,11 +42,11 @@
           应付总额<span>￥{{costAll - promotion }}</span>
           <br>
           <template v-if="promotion">
-            (优惠<span>￥ {{promotion}}</span>)
+            (优惠<span>￥{{promotion}}</span>)
           </template>
         </div>
         <div class="cart-footer-desc">
-          <div class="cart-control-order" @click="handleOrder">现在结算</div>
+          <div class="cart-control-order" @click="handleOrder"> 现在结算</div>
         </div>
       </div>
     </div>
@@ -220,20 +220,32 @@
       }
     }
     .cart-promotion{
-      padding:16px 32px;
-      .cart-control-promotion,.cart-control-order{
+      padding:32px 32px;
+      input{
+        width:200px;
+        height:22px;
+        line-height:22px;
+        margin:0 10px;
+        text-indent:5px;
+        border-radius:5px;
+        border:1px solid #dddee1;
+        outline: none;
+        position: relative;
+        top:-1px;
+      }
+
+      .cart-control-promotion{
         display: inline-block;
         padding:8px 32px;
         border-radius:6px;
         background: #2d8cf0;
         color:#fff;
         cursor: pointer;
-      }
-      .cart-control-promotion{
         padding:2px 6px;
         font-size:12px;
         border-radius:3px
       }
+
     }
     .cart-footer{
       padding:32px;
@@ -244,6 +256,18 @@
         span{
           color:#f2352e;
           font-size:20px;
+        }
+        .cart-control-order{
+          display: inline-block;
+          padding: 3px 6px;
+          cursor: pointer;
+          border-radius: 5px;
+          border:1px solid #dddee1;
+          background: #2d8cf0;
+          color:#fff;
+          position: relative;
+          top:-3px;
+          font-size:14px;
         }
       }
     }

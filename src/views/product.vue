@@ -1,105 +1,105 @@
 <template>
-    <div v-if="product">
-      <div class="product">
-          <div class="product-image">
-            <img :src="product.image">
-          </div>
-          <div class="product-info">
-            <h1 class="product-name">{{product.name}}</h1>
-            <div class="product-cost">￥{{product.cost}}</div>
-            <div class="product-add-cart" @click="handleAddToCart">加入购物车</div>
-          </div>
-          <div class="product-desc">
-            <h2>产品介绍</h2>
-            <img v-for="n in 10" :src="'http://ordfm6aah.bkt.clouddn.com/shop/'+n+'.jpeg'">
-          </div>
-      </div>
+    <div class="product">
+        <router-link :to="'/product/'+info.id" class="product-main">
+          <img :src="info.image">
+          <h4>{{info.name}}</h4>
+          <div class="product-sale"><label>销量：</label><span>{{info.sales}}</span></div>
+         <!-- <div class="product-color" :style="{background:colors[info.color]}"></div>-->
+          <div class="product-cost">￥{{info.cost}}</div>
+          <div class="product-add-cart" @click.prevent="handleCart">加入购物车</div>
+        </router-link>
     </div>
 </template>
 <script>
-  //导入本地数据做匹配用，真实环境不需要
-  import product_data from '../product'
-
   export default {
+    props:{
+      info:{},
+    },
     data(){
       return {
-        //获取路由中的参数
-        id:parseInt(this.$route.params.id),
-        product:null
+        colors:{
+          '白色':'#ffffff',
+          '金色':'#dac272',
+          '蓝色':'#233472',
+          '红色':'#f2352e',
+        }
       }
     },
     methods:{
-      getProduct(){
-        //真实环境下通过ajax获取，这里用异步模拟
-        setTimeout(()=>{
-          this.product =product_data.find(item =>item.id === this.id);
-        },500);
-      },
-      //加入购物车
-      handleAddToCart(){
-        this.$store.commit('addCart',this.id);
+      handleCart(){
+        this.$store.commit('addCart',this.info.id);
       }
-    },
-    mounted(){
-      //初始化时请求数据
-      this.getProduct();
     }
   }
 </script>
 <style lang="less" scoped>
-  .product{
-    margin:32px;
-    padding:32px;
-    background: #fff;
-    border:1px solid #dddee1;
-    border-radius:10px;
-    overflow: hidden;
-    .product-image{
-      width:50%;
-      height: 550px;
-      float:left;
-      text-align: center;
-      img{
-        height: 100%;
-      }
-    }
-    .product-info{
-      width:50%;
-      padding:150px 0 250px;
-      height:150px;
-      float: left;
-      text-align: center;
-    }
-    .product-cost{
-      color:#d2352e;
-      margin:8px 0;
-    }
-    .product-add-cart{
-      display: inline-block;
-      padding:8px 64px;
-      margin:8px 0;
-      background: #2d8cf0;
-      color:#fff;
-      border-radius:4px;
-      cursor: pointer;
-    }
-    .product-desc{
-      background: #fff;
-      margin:32px;
-      padding:32px;
+  .product {
+    width:25%;
+    float:left;
+
+    .product-main{
+      display: block;
+      margin:16px;
+      padding:16px;
       border:1px solid #dddee1;
-      border-radius:10px;
-      text-align: center;
+      border-radius:6px;
+      overflow:hidden;
+      background: #fff;
+      text-align: left;
+      position: relative;
+
       img{
-        display: block;
-        width:50%;
-        margin:32px auto;
-        padding:32px;
-        border-bottom:1px solid #dddee1;
+        width:100%;
+      }
+      h4{
+        color:#222;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      h4:hover{
+        color:#0070c9;
+      }
+      .product-sale{
+        height:18px;
+        line-height: 18px;
+        margin-top:5px;
+        label{
+          font-size:12px;
+        }
+        span{
+          font-size:14px;
+        }
 
       }
+      .product-color{
+        display: block;
+        width:16px;
+        height:16px;
+        border:1px solid #dddee1;
+        border-radius:50%;
+        margin:6px auto;
+      }
+      .product-cost{
+        color:#de4037;
+        margin-top:6px;
+      }
+      .product-add-cart{
+        display: none;
+        padding:4px 8px;
+        background: #2d8cf0;
+        color:#fff;
+        font-size:12px;
+        border-radius:3px;
+        cursor: pointer;
+        position: absolute;
+        top:5px;
+        right:5px;
+      }
     }
-
+    .product-main:hover .product-add-cart{
+      display: inline-block;
+    }
 
   }
 </style>
